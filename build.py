@@ -15,6 +15,7 @@ draft: true                (optional; keeps the post off the site)
 ---
 """
 import datetime as dt
+import os
 import html
 import pathlib
 import re
@@ -25,6 +26,16 @@ import markdown
 ROOT = pathlib.Path(__file__).parent
 OUT = ROOT / "_site"
 SITE_URL = "https://jaisellers.blog"
+# Subfolder the site is served from. Empty on the custom domain (jaisellers.blog);
+# "/jaisellers-blog" while it lives at jscompanies.github.io/jaisellers-blog/.
+BASE_PATH = os.environ.get("BASE_PATH", "").rstrip("/")
+
+
+def rebase(text):
+    """Prefix root-relative links (href="/...", src="/...") with BASE_PATH."""
+    if not BASE_PATH:
+        return text
+    return re.sub(r'((?:href|src)=")/(?!/)', rf"\1{BASE_PATH}/", text)
 SERIES_INTRO = {
     "Grace & Mercy": "A numbered sequence on the distance between what the church says about grace and what it practices. Personal story first, then the prophetic and policy turn.",
 }
@@ -220,18 +231,19 @@ def main():
         shutil.rmtree(OUT)
     OUT.mkdir()
     posts = load_posts()
-    (OUT / "index.html").write_text(build_home(posts), encoding="utf-8")
+    (OUT / "index.html").write_text(rebase(build_home(posts)), encoding="utf-8")
     for p in posts:
         d = OUT / "posts" / p["slug"]
         d.mkdir(parents=True)
-        (d / "index.html").write_text(build_post(p, posts), encoding="utf-8")
+        (d / "index.html").write_text(rebase(build_post(p, posts)), encoding="utf-8")
     (OUT / "feed.xml").write_text(build_feed(posts), encoding="utf-8")
-    (OUT / "404.html").write_text(page("Page not found · Joshua Jai Sellers", "Page not found.",
+    (OUT / "404.html").write_text(rebase(page("Page not found · Joshua Jai Sellers", "Page not found.",
         '<header class="hero"><div class="wrap"><svg class="crest" viewBox="0 0 120 120" aria-hidden="true"><use href="#laurel"/></svg>'
         '<div class="eyebrow">Error 404</div><h1><em class="foil">Not here.</em></h1>'
-        '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>'), encoding="utf-8")
+        '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>')), encoding="utf-8")
     shutil.copy(ROOT / "static" / "style.css", OUT / "style.css")
-    (OUT / "CNAME").write_text("jaisellers.blog\n")
+    if not BASE_PATH:
+        (OUT / "CNAME").write_text("jaisellers.blog\n")
     (OUT / ".nojekyll").write_text("")
     print(f"Built {len(posts)} posts into {OUT}")
 
