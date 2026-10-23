@@ -5,6 +5,8 @@ summary: Twenty honest observations on how the American church weaponizes truth 
 series: Grace & Mercy
 part: 2
 tag: Confessions
+image: grace-mercy-02.jpg
+image_alt: Grace & Mercy series, part 2: The Freedom That Finds Us First. When mercy breaks chains we did not know we were still carrying. Ephesians 2:4-5.
 ---
 
 A friend of mine got asked to step down from serving on a ministry team the same month she started grief counseling. Nobody framed it as punishment. It was "just not the right season." She hasn't been back to a church since. That's not a story about her losing her faith. That's a story about a system that couldn't tell the difference between someone who was struggling and someone who was disqualified.
