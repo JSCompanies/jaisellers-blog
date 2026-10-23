@@ -3,6 +3,8 @@ title: ✝️ THE GOSPEL ACCORDING TO GEN X | EPISODE 01: THE LAST SUPPER
 date: 2026-10-22
 summary: We Inherited the Ruins.
 tag: GenX
+series: The Gospel According to Gen X
+part: 1
 image: GenXLastSupper.jpg
 image_alt: The Last Supper as Gen X would have it.
 ---
