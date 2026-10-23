@@ -146,3 +146,9 @@ footer.site .line2{margin-top:8px;font-family:var(--meta);font-size:.68rem;lette
   .pager{grid-template-columns:1fr}
   .pager a:last-child{text-align:left}
 }
+
+/* Cover images (image: in post header) */
+.cover{margin:0}
+.cover img{display:block;width:100%;max-height:72vh;object-fit:cover;border-bottom:1px solid var(--rule)}
+.essay .thumb{display:block;margin-bottom:18px}
+.essay .thumb img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid var(--rule)}
