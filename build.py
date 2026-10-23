@@ -40,6 +40,7 @@ def rebase(text):
         return text
     return re.sub(r'((?:href|src)=")/(?!/)', rf"\1{BASE_PATH}/", text)
 SERIES_INTRO = {
+"The Gospel According to Gen X": "We inherited the ruins.",
     "Grace & Mercy": "A numbered sequence on the distance between what the church says about grace and what it practices. Personal story first, then the prophetic and policy turn.",
 }
 SERIES_IMAGE = {
