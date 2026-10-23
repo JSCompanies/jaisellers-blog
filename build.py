@@ -82,12 +82,33 @@ FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox
 e = html.escape
 
 
-def page(title, description, body, path="/", image=""):
-    og_image = ""
-    if image:
-        abs_img = image if image.startswith("http") else f"{SITE_URL}{image}"
-        og_image = (f'<meta property="og:image" content="{e(abs_img)}">'
-                    f'<meta name="twitter:card" content="summary_large_image">')
+DEFAULT_SHARE = "/share.jpg"   # static/share.jpg -- used when a page has no image
+
+
+def share_image(image):
+    """Pick the link-preview image: a 1200x630 version in content/images/share/ if one
+    exists, else the post image as-is, else the site default card."""
+    if not image:
+        return DEFAULT_SHARE
+    if image.startswith("/images/"):
+        name = image[len("/images/"):]
+        if (ROOT / "content" / "images" / "share" / name).exists():
+            return f"/images/share/{name}"
+    return image
+
+
+def page(title, description, body, path="/", image="", image_alt=""):
+    img = share_image(image)
+    abs_img = img if img.startswith("http") else f"{SITE_URL}{img}"
+    alt = image_alt if image else "Joshua Jai Sellers: Essays on faith, justice, and the long work of coming home."
+    og_image = (f'<meta property="og:image" content="{e(abs_img)}">'
+                f'<meta property="og:image:alt" content="{e(alt)}">'
+                f'<meta name="twitter:card" content="summary_large_image">'
+                f'<meta name="twitter:title" content="{e(title)}">'
+                f'<meta name="twitter:description" content="{e(description)}">'
+                f'<meta name="twitter:image" content="{e(abs_img)}">')
+    if img.startswith("/images/share/") or img == DEFAULT_SHARE:
+        og_image += '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -98,6 +119,7 @@ def page(title, description, body, path="/", image=""):
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(description)}">
 <meta property="og:url" content="{SITE_URL}{path}">
+<meta property="og:site_name" content="Joshua Jai Sellers">
 <meta property="og:type" content="{'article' if path.startswith('/posts/') else 'website'}">
 {og_image}
 <meta name="theme-color" content="#0C0C0E">
@@ -247,7 +269,7 @@ def build_post(p, posts):
 <article class="wrap"><div class="prose">{p["html"]}</div></article>
 {series_block}
 {pager}"""
-    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"], p.get("image", ""))
+    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"], p.get("image", ""), p.get("image_alt", ""))
 
 
 def build_feed(posts):
@@ -276,6 +298,12 @@ def main():
         '<div class="eyebrow">Error 404</div><h1><em class="foil">Not here.</em></h1>'
         '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>')), encoding="utf-8")
     shutil.copy(ROOT / "static" / "style.css", OUT / "style.css")
+    shutil.copy(ROOT / "static" / "share.jpg", OUT / "share.jpg")
+    urls = [f"{SITE_URL}/"] + [f"{SITE_URL}{p['url']}" for p in posts]
+    (OUT / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+        + "".join(f"<url><loc>{u}</loc></url>" for u in urls) + "</urlset>", encoding="utf-8")
+    (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     images = ROOT / "content" / "images"
     if images.exists():
         shutil.copytree(images, OUT / "images")
