@@ -12,6 +12,9 @@ tag: Faith                 (optional label)
 series: Grace & Mercy      (optional; only for series posts)
 part: 3                    (optional; series number)
 draft: true                (optional; keeps the post off the site)
+image: my-photo.jpg        (optional; file in content/images/ -- shown above the title,
+                            on the homepage, and as the link-share preview)
+image_alt: A description   (optional; describes the photo for screen readers)
 ---
 """
 import datetime as dt
@@ -67,7 +70,12 @@ FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox
 e = html.escape
 
 
-def page(title, description, body, path="/"):
+def page(title, description, body, path="/", image=""):
+    og_image = ""
+    if image:
+        abs_img = image if image.startswith("http") else f"{SITE_URL}{image}"
+        og_image = (f'<meta property="og:image" content="{e(abs_img)}">'
+                    f'<meta name="twitter:card" content="summary_large_image">')
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -79,6 +87,7 @@ def page(title, description, body, path="/"):
 <meta property="og:description" content="{e(description)}">
 <meta property="og:url" content="{SITE_URL}{path}">
 <meta property="og:type" content="{'article' if path.startswith('/posts/') else 'website'}">
+{og_image}
 <meta name="theme-color" content="#0C0C0E">
 <link rel="canonical" href="{SITE_URL}{path}">
 <link rel="icon" href="{FAVICON}">
@@ -124,6 +133,11 @@ def load_posts():
         meta["part"] = int(meta["part"]) if meta.get("part") else None
         meta["slug"] = f.stem
         meta["url"] = f"/posts/{f.stem}/"
+        img = meta.get("image", "")
+        if img and not img.startswith(("http://", "https://", "/")):
+            img = f"/images/{img}"
+        meta["image"] = img
+        meta["image_alt"] = meta.get("image_alt") or meta["title"]
         meta["html"] = markdown.markdown(m.group(2), extensions=["smarty"])
         posts.append(meta)
     posts.sort(key=lambda p: (p["date_obj"], p["part"] or 0), reverse=True)
@@ -157,10 +171,16 @@ def series_list(name, posts, current=None):
     return '<div class="series-list">' + "".join(rows) + "</div>"
 
 
+def thumb(p):
+    if not p.get("image"):
+        return ""
+    return (f'<a class="thumb" href="{p["url"]}" tabindex="-1" aria-hidden="true">'
+            f'<img src="{e(p["image"])}" alt="" loading="lazy"></a>')
+
 def build_home(posts):
     essays = "".join(
         f'<article class="essay"><div class="meta"><span class="tag">{label(p)}</span><span>{nice_date(p["date_obj"])}</span></div>'
-        f'<div><h3><a href="{p["url"]}">{e(p["title"])}</a></h3><p>{e(p["summary"])}</p>'
+        f'<div>{thumb(p)}<h3><a href="{p["url"]}">{e(p["title"])}</a></h3><p>{e(p["summary"])}</p>'
         f'<a class="read" href="{p["url"]}">Read the essay</a></div></article>'
         for p in posts)
     series_names = sorted({p["series"] for p in posts if p.get("series")})
@@ -203,7 +223,9 @@ def build_post(p, posts):
     pager += (f'<a href="{older["url"]}"><span class="eyebrow">Previous essay</span><h5>{e(older["title"])}</h5></a>' if older else "<span></span>")
     pager += (f'<a href="{newer["url"]}"><span class="eyebrow">Next essay</span><h5>{e(newer["title"])}</h5></a>' if newer else "<span></span>")
     pager += "</div>"
-    body = f"""<header class="article-head"><div class="wrap">
+    cover = (f'<figure class="cover"><img src="{e(p["image"])}" alt="{e(p["image_alt"])}"></figure>'
+             if p.get("image") else "")
+    body = f"""{cover}<header class="article-head"><div class="wrap">
 <svg class="crest" viewBox="0 0 120 120" aria-hidden="true"><use href="#laurel"/></svg>
 <div class="eyebrow">{label(p)}</div>
 <h1 class="foil">{e(p["title"])}</h1>
@@ -213,7 +235,7 @@ def build_post(p, posts):
 <article class="wrap"><div class="prose">{p["html"]}</div></article>
 {series_block}
 {pager}"""
-    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"])
+    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"], p.get("image", ""))
 
 
 def build_feed(posts):
@@ -242,6 +264,9 @@ def main():
         '<div class="eyebrow">Error 404</div><h1><em class="foil">Not here.</em></h1>'
         '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>')), encoding="utf-8")
     shutil.copy(ROOT / "static" / "style.css", OUT / "style.css")
+    images = ROOT / "content" / "images"
+    if images.exists():
+        shutil.copytree(images, OUT / "images")
     if not BASE_PATH:
         (OUT / "CNAME").write_text("jaisellers.blog\n")
     (OUT / ".nojekyll").write_text("")
