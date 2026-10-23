@@ -1,12 +1,11 @@
 ---
-title: ✝️ THE GOSPEL ACCORDING TO GEN X
-EPISODE 01 | THE LAST SUPPER
+title: ✝️ THE GOSPEL ACCORDING TO GEN X | EPISODE 01: THE LAST SUPPER
 date: 2026-10-22
 summary: We Inherited the Ruins.
 tag: GenX
+image: GenXLastSupper.jpg
+image_alt: The Last Supper as Gen X would have it.
 ---
-
-![The Last Supper as the GenX would have it.](https://raw.githubusercontent.com/JSCompanies/jaisellers-blog/main/content/images/sunday-light.jpg)
 
 We were the latchkey kids.
 
