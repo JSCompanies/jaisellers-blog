@@ -24,8 +24,6 @@ jobs:
           python-version: "3.12"
       - run: pip install markdown==3.10.3
       - run: python build.py
-        env:
-          BASE_PATH: /jaisellers-blog   # delete this line once jaisellers.blog points to GitHub Pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
