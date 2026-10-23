@@ -3,6 +3,8 @@ title: The Scarlet Letter We Still Sew
 date: 2026-07-09
 summary: We tell people coming home from prison to change their lives, then build a system that makes change impossible.
 tag: Reentry
+image: scarlet-letter-we-still-sew.jpg
+image_alt: A worn manila case file with a red letter A sewn on the cover and a photo of a key tucked behind it.
 ---
 
 I sat across from a man last month who had done everything right. Eighteen months clean inside. GED finished. A trade certification he earned in a program most guys skip. He walked out with a folder of paperwork and a bus ticket, and by week two he had been turned down for eleven apartments and nine jobs — not because he lied about his record, but because he told the truth about it.
