@@ -1,7 +1,7 @@
 ---
-title: Neither Merciful Nor Graceful
+title: The Church That Forgot to Reach
 date: 2026-07-09
-summary: She got the message anyway. Nobody condemned her; they just drifted away. On the gap between what we preach and how we treat people.
+summary: When doctrine took the place of compassion and community.
 series: Grace & Mercy
 part: 1
 tag: Faith
@@ -9,67 +9,100 @@ image: grace-mercy-01.jpg
 image_alt: Grace & Mercy series, part 1: The Church That Forgot to Reach. When doctrine took the place of compassion and community. Hosea 6:6.
 ---
 
-I once watched a woman slowly disappear from her church community.
+Drive past almost any church on a Tuesday afternoon.
 
-Nothing dramatic happened. She'd gone through a divorce that people didn't agree with, and over the next several weeks the invitations stopped. The group texts got quieter. "We should get together sometime" became something people said without ever meaning it.
+The parking lot is empty. The doors are locked. The sign out front has a clever line about the weather and hell.
 
-No one confronted her. No one condemned her. They just... drifted away.
+Three blocks away, someone is sleeping in a doorway. A few miles away, the county jail is full. Somewhere in between, a mother is calling every number she has trying to find her son a detox bed that doesn't exist.
 
-Politely. Respectably. Probably even prayerfully, in their own minds.
+The church opens again Sunday at ten.
 
-She got the message anyway.
+That's not an accusation. It's a schedule.
 
-The truth is, that's not an isolated story.
+And the schedule tells the truth about us.
 
-That's the operating system.
+We've built a faith that happens almost entirely indoors. We gather, we sing, we hear a good word, we shake the same eleven hands, and we go home. The body of Christ shows up in the building, then disappears for six days.
 
-We love talking about grace. We quote, "Mercy triumphs over judgment" (James 2:13). We post beautiful verses over sunsets and call ourselves people of compassion.
+We call it fellowship.
 
-But when grace actually costs us something — when it's the addict, the divorced person, the formerly incarcerated neighbor, the gay teenager who just came out, the woman carrying the weight of an abortion, or the family whose life is unraveling in public — we often default to distance instead.
+Most of the time, it's a clique with a steeple.
 
-Silence.
+**We have gotten very good at maintaining the room.**
 
-A slow, socially acceptable withdrawal.
+Membership classes. Doctrinal statements. Bylaws about who can serve, who can teach, who gets to stand up front. Finance committees that can tell you the cost of a new sound system to the dollar.
 
-We give it respectable names: healthy boundaries, not enabling, prayerful discernment. But too often it functions exactly like judgment with better branding.
+Now ask that same room to name three people on their street they've never met. Ask where the nearest recovery meeting is. Ask when anyone from the church last walked into the county jail.
 
-**Here's the part of Scripture we conveniently skip.**
+Watch it get quiet.
 
-Mercy isn't simply choosing not to condemn someone.
+Somewhere along the way, doctrine took the seat compassion used to sit in. We got so busy being right about God that we stopped going where God goes.
 
-Mercy moves.
+And Scripture is not subtle about where that is.
 
-Micah 6:8 doesn't tell us to admire kindness. It tells us to do justice and love mercy.
+> "I was sick and you visited me, I was in prison and you came to me." — Matthew 25:36
 
-Grace isn't a reward for people who've finally gotten their lives together. Grace is God's unearned favor extended precisely because they haven't.
+Not "you prayed about me." Not "you supported a ministry that, on paper, does prison outreach."
 
-> If grace only shows up after the mess is cleaned up, it isn't grace anymore. It's approval.
+You came.
 
-Jesus understood that.
+Hebrews 13:3 goes further. Remember those in prison "as though in prison with them." That isn't charity at arm's length. That's proximity. That's sitting on the other side of the glass.
 
-He ate with tax collectors while they were still tax collectors. He welcomed sinners before they had anything to offer Him. Zacchaeus didn't change so Jesus would come to his house.
+When the master of the banquet in Luke 14 found out his invited guests weren't coming, he didn't redecorate the hall. He told his servant, "Go out quickly to the streets and lanes of the city," and bring in the poor, the crippled, the blind, and the lame.
 
-Jesus came to his house.
+Go out. Quickly.
 
-Then Zacchaeus changed.
+The modern church heard "come and see" and quietly deleted "go."
 
-We've reversed the order.
+**Here's what Jesus actually did with Hosea 6:6.**
 
-And then we wonder why so many people walk away from the Church — not because they've stopped believing in God, but because they've experienced so little of what we insist God is like.
+He was eating at Matthew's house. Tax collectors. Sinners. The wrong crowd at the wrong table. The religious leaders wanted to know why He was there.
 
-This isn't me pointing fingers from the outside.
+He told them, "Go and learn what this means: 'I desire mercy, and not sacrifice.'"
 
-I'm in this too.
+Go and learn.
 
-I've been the person who got quiet because someone else's situation made me uncomfortable. I've chosen comfort over compassion. I've protected my own social standing instead of loving someone well.
+He was telling the most doctrinally precise people in the room that they had the words right and the posture wrong. They knew the law. They didn't know the neighbor.
 
-That's exactly why this conversation matters.
+That's us.
 
-The gap between what we preach and how we practice isn't someone else's problem.
+> A church that only reaches its own pews isn't a body. It's a members-only club with better music.
 
-It's ours.
+Think about who never makes it to our pews.
 
-And it can begin to close the moment obedience becomes more important than comfort.
+The man fresh out of prison with a bus ticket and a folder of paperwork. The woman three days into withdrawal who can't sit still long enough for a forty-minute sermon. The kid who got put out of the house and is couch-surfing until the couches run out. The neighbor two doors down who hasn't left the house since the funeral.
+
+They're not coming to us.
+
+They were never going to come to us.
+
+That was always our job.
+
+**I'm not writing this from a safe distance.**
+
+I've sat in those pews. I've been comfortable in that clique. I've driven past the jail and the shelter and the motel on the highway where half the rooms rent by the week, and I've told myself somebody else had that covered.
+
+Usually, nobody did.
+
+That's the part that keeps me up. Not that the church is bad at outreach. That outreach became a line item instead of a lifestyle. Something a committee handles so the rest of us don't have to.
+
+**So what does reaching actually look like?**
+
+Not a campaign. A practice.
+
+- Show up at the county jail. Visitation, chaplaincy, letters. Ask what people inside need, then do it.
+- Open the fellowship hall to a recovery meeting. Then stay for coffee.
+- Learn the names of the people who live within a mile of the building.
+- Sit in a courtroom on a Tuesday. Just notice who's sitting there alone.
+- Hire the guy with the record. Rent to him. Vouch for him.
+- Count how much of the budget actually leaves the building. Then be honest about what that number says.
+
+None of this requires a new building. It requires leaving the one we have.
+
+Hosea didn't say God wanted better sacrifices. He said God wanted mercy.
+
+Mercy doesn't wait in the lobby.
+
+Mercy goes.
 
 ---
 
