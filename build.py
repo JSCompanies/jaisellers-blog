@@ -42,6 +42,17 @@ def rebase(text):
 SERIES_INTRO = {
     "Grace & Mercy": "A numbered sequence on the distance between what the church says about grace and what it practices. Personal story first, then the prophetic and policy turn.",
 }
+SERIES_IMAGE = {
+    "Grace & Mercy": "grace-mercy-series.jpg",
+}
+
+def series_banner(name):
+    img = SERIES_IMAGE.get(name)
+    if not img:
+        return ""
+    return (f'<figure class="series-banner"><img src="/images/{e(img)}" '
+            f'alt="{e(name)} series" loading="lazy"></figure>')
+
 ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
 FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
@@ -187,7 +198,7 @@ def build_home(posts):
     series_html = "".join(
         f'<section class="series" id="series"><div class="wrap"><div class="section-label"><div>'
         f'<div class="eyebrow">Ongoing Series</div><h2><span class="foil">{e(n)}</span></h2></div></div>'
-        f'<p class="intro">{e(SERIES_INTRO.get(n, ""))}</p>{series_list(n, posts)}</div></section>'
+        f'<p class="intro">{e(SERIES_INTRO.get(n, ""))}</p>{series_banner(n)}{series_list(n, posts)}</div></section>'
         for n in series_names)
     body = f"""<header class="hero" id="top"><div class="wrap">
 <svg class="crest" viewBox="0 0 120 120" role="img" aria-label="JS laurel crest"><use href="#laurel"/></svg>
