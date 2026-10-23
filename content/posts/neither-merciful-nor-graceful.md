@@ -5,6 +5,8 @@ summary: She got the message anyway. Nobody condemned her; they just drifted awa
 series: Grace & Mercy
 part: 1
 tag: Faith
+image: grace-mercy-01.jpg
+image_alt: Grace & Mercy series, part 1: The Church That Forgot to Reach. When doctrine took the place of compassion and community. Hosea 6:6.
 ---
 
 I once watched a woman slowly disappear from her church community.
