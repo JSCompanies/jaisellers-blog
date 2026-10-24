@@ -131,7 +131,8 @@ footer.site .line2{margin-top:8px;font-family:var(--meta);font-size:.68rem;lette
 
 @media (max-width:720px){
   nav.site ul{gap:16px}
-  nav.site ul li:nth-child(n+3){display:none}
+  nav.site ul li:nth-child(3){white-space:nowrap}
+  nav.site ul li:nth-child(1),nav.site ul li:nth-child(n+4){display:none}
   .hero{padding-block:56px 48px}
   .essay{grid-template-columns:1fr;gap:12px}
   .essay .meta{flex-direction:row;align-items:center;flex-wrap:wrap}

@@ -2,16 +2,12 @@
 title: Twenty Ways We've Confused Conviction With Condemnation
 date: 2026-07-16
 summary: Twenty honest observations on how the American church weaponizes truth instead of healing with it.
-series: Grace & Mercy
-part: 2
 tag: Confessions
-image: grace-mercy-02.jpg
-image_alt: Grace & Mercy series, part 2: The Freedom That Finds Us First. When mercy breaks chains we did not know we were still carrying. Ephesians 2:4-5.
 ---
 
 A friend of mine got asked to step down from serving on a ministry team the same month she started grief counseling. Nobody framed it as punishment. It was "just not the right season." She hasn't been back to a church since. That's not a story about her losing her faith. That's a story about a system that couldn't tell the difference between someone who was struggling and someone who was disqualified.
 
-That's the pattern this series is naming. Here are twenty places I see it show up.
+That's the pattern the Grace & Mercy series is naming. Here are twenty places I see it show up.
 
 **1. We weaponize truth instead of healing with it.**
 
@@ -99,4 +95,4 @@ People leave church believing they must earn acceptance, forgiveness, belonging,
 
 ---
 
-None of this is written from the outside looking in. I've done more than one of these things myself. That's the point of naming them plainly instead of vaguely — you can't repent of something you won't name. Part three of this series is coming.
+None of this is written from the outside looking in. I've done more than one of these things myself. That's the point of naming them plainly instead of vaguely — you can't repent of something you won't name. This list is the map for the **Grace & Mercy** series. Several of these get their own full essay there.

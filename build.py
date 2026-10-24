@@ -40,12 +40,16 @@ def rebase(text):
         return text
     return re.sub(r'((?:href|src)=")/(?!/)', rf"\1{BASE_PATH}/", text)
 SERIES_INTRO = {
-"The Gospel According to Gen X": "We inherited the ruins.",
+    "The Gospel According to Gen X": "We inherited the ruins.",
     "Grace & Mercy": "A numbered sequence on the distance between what the church says about grace and what it practices. Personal story first, then the prophetic and policy turn.",
 }
 SERIES_IMAGE = {
     "Grace & Mercy": "grace-mercy-series.jpg",
 }
+
+def series_id(name):
+    return "series-" + re.sub(r"[^a-z0-9]+", "-", name.lower().replace("&", "and")).strip("-")
+
 
 def series_banner(name):
     img = SERIES_IMAGE.get(name)
@@ -133,7 +137,7 @@ def page(title, description, body, path="/", image="", image_alt=""):
 {CREST_DEFS}
 <nav class="site"><div class="wrap">
 <a class="mark" href="/" aria-label="Joshua Jai Sellers, home"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#laurel"/></svg><span>Jai Sellers</span></a>
-<ul><li><a href="/#essays">Essays</a></li><li><a href="/#series">Grace &amp; Mercy</a></li><li><a href="/#about">About</a></li><li><a href="https://jaisellers.com">JSCo</a></li></ul>
+<ul><li><a href="/#essays">Essays</a></li><li><a href="/#series-grace-and-mercy">Grace &amp; Mercy</a></li><li><a href="/#series-the-gospel-according-to-gen-x">Gen X</a></li><li><a href="/#about">About</a></li><li><a href="https://jaisellers.com">JSCo</a></li></ul>
 </div></nav>
 {body}
 <footer class="site"><div class="wrap">
@@ -219,7 +223,7 @@ def build_home(posts):
         for p in posts)
     series_names = sorted({p["series"] for p in posts if p.get("series")})
     series_html = "".join(
-        f'<section class="series" id="series"><div class="wrap"><div class="section-label"><div>'
+        f'<section class="series" id="{series_id(n)}"><div class="wrap"><div class="section-label"><div>'
         f'<div class="eyebrow">Ongoing Series</div><h2><span class="foil">{e(n)}</span></h2></div></div>'
         f'<p class="intro">{e(SERIES_INTRO.get(n, ""))}</p>{series_banner(n)}{series_list(n, posts)}</div></section>'
         for n in series_names)
@@ -238,7 +242,7 @@ def build_home(posts):
 <section class="about" id="about"><div class="wrap">
 <blockquote>Grace is not a feeling. It is a practice, and it shows up in policy.</blockquote>
 <div>
-<p>I'm Joshua Jai Sellers, founder of JaiSellers Companies and the Just Systems Initiative in Kings Mountain, North Carolina.</p>
+<p>I'm Joshua Jai Sellers, founder of JaiSellers Companies and the Justice Systems Initiative in Kings Mountain, North Carolina.</p>
 <p>Before consulting and design, I was a classically trained vocalist. These days I build nonprofit systems, write grants, and work on justice reform and reentry in Cleveland County.</p>
 <p>This blog is the personal side of that work: faith, justice, and the people the systems were supposed to serve.</p>
 </div></div></section>"""
