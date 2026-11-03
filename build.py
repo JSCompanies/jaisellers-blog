@@ -23,6 +23,7 @@ import html
 import pathlib
 import re
 import shutil
+from zoneinfo import ZoneInfo
 
 import markdown
 
@@ -42,6 +43,7 @@ def rebase(text):
 SERIES_INTRO = {
     "The Gospel According to Gen X": "We inherited the ruins.",
     "Grace & Mercy": "A numbered sequence on the distance between what the church says about grace and what it practices. Personal story first, then the prophetic and policy turn.",
+    "Mosaic of Humanity": "Portraits and reflections honoring the people whose courage, imagination, faith, and artistry expand our understanding of what humanity can be.",
 }
 SERIES_IMAGE = {
     "Grace & Mercy": "grace-mercy-series.jpg",
@@ -137,7 +139,7 @@ def page(title, description, body, path="/", image="", image_alt=""):
 {CREST_DEFS}
 <nav class="site"><div class="wrap">
 <a class="mark" href="/" aria-label="Joshua Jai Sellers, home"><svg viewBox="0 0 120 120" aria-hidden="true"><use href="#laurel"/></svg><span>Jai Sellers</span></a>
-<ul><li><a href="/#essays">Essays</a></li><li><a href="/#series-grace-and-mercy">Grace &amp; Mercy</a></li><li><a href="/#series-the-gospel-according-to-gen-x">Gen X</a></li><li><a href="/#about">About</a></li><li><a href="https://jaisellers.com">JSCo</a></li></ul>
+<ul><li><a href="/#essays">Essays</a></li><li><a href="/#series-mosaic-of-humanity">Mosaic of Humanity</a></li><li><a href="/#series-grace-and-mercy">Grace &amp; Mercy</a></li><li><a href="/#series-the-gospel-according-to-gen-x">Gen X</a></li><li><a href="/#about">About</a></li><li><a href="https://jaisellers.com">JSCo</a></li></ul>
 </div></nav>
 {body}
 <footer class="site"><div class="wrap">
@@ -152,6 +154,7 @@ def page(title, description, body, path="/", image="", image_alt=""):
 
 def load_posts():
     posts = []
+    now_eastern = dt.datetime.now(ZoneInfo("America/New_York"))
     for f in sorted((ROOT / "content" / "posts").glob("*.md")):
         text = f.read_text(encoding="utf-8")
         m = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)$", text, re.S)
@@ -168,6 +171,13 @@ def load_posts():
             if not meta.get(req):
                 raise SystemExit(f"{f.name}: header needs a '{req}:' line")
         meta["date_obj"] = dt.date.fromisoformat(meta["date"])
+        # Optional Eastern-time embargo for future scheduled releases.
+        if meta.get("publish_at"):
+            release = dt.datetime.fromisoformat(meta["publish_at"])
+            if release.tzinfo is None:
+                release = release.replace(tzinfo=ZoneInfo("America/New_York"))
+            if release.astimezone(ZoneInfo("America/New_York")) > now_eastern:
+                continue
         meta["part"] = int(meta["part"]) if meta.get("part") else None
         meta["slug"] = f.stem
         meta["url"] = f"/posts/{f.stem}/"
