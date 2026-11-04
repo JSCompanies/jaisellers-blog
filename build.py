@@ -18,6 +18,7 @@ image_alt: A description   (optional; describes the photo for screen readers)
 ---
 """
 import datetime as dt
+import json
 import os
 import html
 import pathlib
@@ -80,13 +81,7 @@ CREST_DEFS = """<svg width="0" height="0" style="position:absolute" aria-hidden=
 <text x="60" y="71" text-anchor="middle" font-family="Bodoni Moda, Didot, serif" font-style="italic" font-weight="700" font-size="34" fill="url(#foil)">JS</text>
 </symbol></defs></svg>"""
 
-FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E"
-           "%3Crect width='100' height='100' rx='50' fill='%230C0C0E'/%3E"
-           "%3Ccircle cx='50' cy='50' r='44' fill='none' stroke='%23C9A84C' stroke-width='4'/%3E"
-           "%3Ctext x='50' y='64' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-weight='700' font-size='40' fill='%23C9A84C'%3EJS%3C/text%3E%3C/svg%3E")
-
 e = html.escape
-
 
 DEFAULT_SHARE = "/share.jpg"   # static/share.jpg -- used when a page has no image
 
@@ -103,7 +98,25 @@ def share_image(image):
     return image
 
 
-def page(title, description, body, path="/", image="", image_alt=""):
+ICONS = ('<link rel="icon" href="/favicon.ico?v=2" sizes="48x48">'
+         '<link rel="icon" type="image/png" href="/favicon-96x96.png?v=2" sizes="96x96">'
+         '<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">'
+         '<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">'
+         '<link rel="manifest" href="/site.webmanifest?v=2">'
+         '<meta name="apple-mobile-web-app-title" content="Jai Sellers">')
+
+AUTHOR = {"@type": "Person", "name": "Joshua Jai Sellers", "url": "https://jaisellers.com",
+          "sameAs": ["https://jaisellers.com"]}
+
+
+def ld(data):
+    """JSON-LD structured data block for search engines."""
+    return ('<script type="application/ld+json">'
+            + json.dumps({"@context": "https://schema.org", **data}).replace("</", "<\\/")
+            + "</script>")
+
+
+def page(title, description, body, path="/", image="", image_alt="", schema="", noindex=False):
     img = share_image(image)
     abs_img = img if img.startswith("http") else f"{SITE_URL}{img}"
     alt = image_alt if image else "Joshua Jai Sellers: Essays on faith, justice, and the long work of coming home."
@@ -130,7 +143,10 @@ def page(title, description, body, path="/", image="", image_alt=""):
 {og_image}
 <meta name="theme-color" content="#0C0C0E">
 <link rel="canonical" href="{SITE_URL}{path}">
-<link rel="icon" href="{FAVICON}">
+{ICONS}
+<meta property="og:locale" content="en_US">
+{'<meta name="robots" content="noindex">' if noindex else ''}
+{schema}
 <link rel="alternate" type="application/rss+xml" title="Joshua Jai Sellers" href="/feed.xml">
 {FONTS}
 <link rel="stylesheet" href="/style.css">
@@ -256,7 +272,11 @@ def build_home(posts):
 <p>Before consulting and design, I was a classically trained vocalist. These days I build nonprofit systems, write grants, and work on justice reform and reentry in Cleveland County.</p>
 <p>This blog is the personal side of that work: faith, justice, and the people the systems were supposed to serve.</p>
 </div></div></section>"""
-    return page("Joshua Jai Sellers", "Essays on faith, justice, and the long work of coming home.", body)
+    schema = ld({"@type": "Blog", "name": "Joshua Jai Sellers", "url": f"{SITE_URL}/",
+                 "description": "Essays on faith, justice, and the long work of coming home.",
+                 "inLanguage": "en-US", "author": AUTHOR, "publisher": AUTHOR,
+                 "image": f"{SITE_URL}/icon-512.png"})
+    return page("Joshua Jai Sellers", "Essays on faith, justice, and the long work of coming home.", body, schema=schema)
 
 
 def build_post(p, posts):
@@ -283,7 +303,16 @@ def build_post(p, posts):
 <article class="wrap"><div class="prose">{p["html"]}</div></article>
 {series_block}
 {pager}"""
-    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"], p.get("image", ""), p.get("image_alt", ""))
+    img = share_image(p.get("image", ""))
+    post_ld = {"@type": "BlogPosting", "headline": p["title"], "description": p["summary"],
+               "datePublished": p["date_obj"].isoformat(), "author": AUTHOR, "publisher": AUTHOR,
+               "mainEntityOfPage": f"{SITE_URL}{p['url']}", "url": f"{SITE_URL}{p['url']}",
+               "image": img if img.startswith("http") else f"{SITE_URL}{img}", "inLanguage": "en-US",
+               "isPartOf": {"@type": "Blog", "name": "Joshua Jai Sellers", "url": f"{SITE_URL}/"}}
+    if p.get("series"):
+        post_ld["articleSection"] = p["series"]
+    return page(f'{p["title"]} · Joshua Jai Sellers', p["summary"], body, p["url"],
+                p.get("image", ""), p.get("image_alt", ""), schema=ld(post_ld))
 
 
 def build_feed(posts):
@@ -310,13 +339,16 @@ def main():
     (OUT / "404.html").write_text(rebase(page("Page not found · Joshua Jai Sellers", "Page not found.",
         '<header class="hero"><div class="wrap"><svg class="crest" viewBox="0 0 120 120" aria-hidden="true"><use href="#laurel"/></svg>'
         '<div class="eyebrow">Error 404</div><h1><em class="foil">Not here.</em></h1>'
-        '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>')), encoding="utf-8")
+        '<p class="lede">That page doesn\'t exist. <a href="/">Return to the essays.</a></p></div></header>', noindex=True)), encoding="utf-8")
     shutil.copy(ROOT / "static" / "style.css", OUT / "style.css")
     shutil.copy(ROOT / "static" / "share.jpg", OUT / "share.jpg")
-    urls = [f"{SITE_URL}/"] + [f"{SITE_URL}{p['url']}" for p in posts]
+    for icon in (ROOT / "static" / "icons").iterdir():   # favicons + manifest at site root
+        shutil.copy(icon, OUT / icon.name)
+    newest = posts[0]["date_obj"].isoformat() if posts else dt.date.today().isoformat()
+    urls = [(f"{SITE_URL}/", newest)] + [(f"{SITE_URL}{p['url']}", p["date_obj"].isoformat()) for p in posts]
     (OUT / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        + "".join(f"<url><loc>{u}</loc></url>" for u in urls) + "</urlset>", encoding="utf-8")
+        + "".join(f"<url><loc>{u}</loc><lastmod>{d}</lastmod></url>" for u, d in urls) + "</urlset>", encoding="utf-8")
     (OUT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n")
     images = ROOT / "content" / "images"
     if images.exists():
